@@ -2,23 +2,31 @@
 enum class shapeType {triangle, square, rectangle, pentagon, hexagon, octagon};
 
 class Shape {
+protected:
+    double area;
+    double volume;
+    double sideLength;
+    shapeType type;
 public:
-    virtual void setLen(float len)  = 0;
-    virtual float getLen() const = 0;
+    Shape() {
+        area = 0;
+        volume = 0;
+        sideLength = 0;
+        type = shapeType::square;
+    }
+    virtual void setLen(double len)  = 0;
+    virtual double getLen() const = 0;
     virtual double getArea() const = 0;
-    virtual void calcArea() = 0;
+    virtual double calcArea() = 0;
     virtual double getVolume() const = 0;
-    virtual void calcVolume() = 0;
+    virtual double calcVolume() = 0;
     virtual ~Shape() = default;
 };
 
 class Square : public Shape {
-    double area;
-    double volume;
-    float sideLength;
     shapeType type {shapeType::square};
 public:
-    explicit Square(float l) {
+    explicit Square(double l) {
         area = 0;
         volume = 0;
         sideLength = 0;
@@ -26,17 +34,19 @@ public:
         calcArea();
         calcVolume();
     }
-    void setLen(float l) override {
+    void setLen(double l) override {
         sideLength = l;
     }
-    float getLen() const override {
+    double getLen() const override {
         return sideLength;
     }
-    void calcArea() override {
+    double calcArea() override {
         area = sideLength * sideLength;
+        return area;
     }
-    void calcVolume() override {
+    double calcVolume() override {
         volume = sideLength * sideLength * sideLength;
+        return volume;
     }
     double getVolume() const override {
         return volume;
@@ -44,7 +54,7 @@ public:
     double getArea() const override {
         return area;
     }
-    ~Square() = default;
+    ~Square() override = default;
 };
 int main() {
     std::cout << "Program start:" << std::endl;
